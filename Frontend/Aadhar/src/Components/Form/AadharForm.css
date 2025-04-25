@@ -1,0 +1,112 @@
+.form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 40%;
+    height: auto;
+    padding: 24px 32px;
+    background: linear-gradient(180deg, #c3c2fe 10%, #dbdaff 70%, #f1f0fe 100%);
+    color: rgb(24, 46, 156);
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    font-family: 'Lucida Sans';
+}
+
+.form h2{
+    font-size: 45px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-transform: capitalize;
+    letter-spacing: 5px;
+    text-align: center;
+    line-height: 2;
+}
+
+.form h2 span{
+    background: -webkit-linear-gradient(#ff9d00, #ffffff, #40ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.inputs{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 3;
+    gap: 10px;
+    text-transform: capitalize;
+    letter-spacing: 1.8px;
+    position: relative;
+}
+
+input{
+    width: 250px;
+    height: 35px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+select{
+    width: 260px;
+    height: 35px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.button_section{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+button{
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+button[type="submit"]{
+    background: #33ba05;
+    color: #ffffff;
+    transition: all 0.5s;
+}
+
+button[type="submit"]:hover{
+    background: #1f7203;
+}
+
+button[type="reset"]{
+    background: #ff0000;
+    color: #ffffff;
+    transition: all 0.5s;
+}
+button[type="reset"]:hover{
+    background: #720303;
+}
+.error{
+    color: #ff0000;
+    position: absolute;
+    top: 70%;
+    right: 0;
+    font-size: 10px;
+    letter-spacing: 2px;
+    transition: all 0.5s;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
