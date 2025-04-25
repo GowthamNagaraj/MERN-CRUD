@@ -9,7 +9,9 @@ function App() {
     <>
       <Routes>
         <Route path="/AadharForm" element={<AadharForm />}/>
+        <Route path="/AadharForm/:id" element={<AadharForm />}/>
         <Route path="/AadharTable" element={<AadharTable />}/>
+        
       </Routes>      
     </>
   )

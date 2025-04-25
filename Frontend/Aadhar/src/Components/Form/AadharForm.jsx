@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import './AadharForm.css'
 import { AadharNumber } from '../../Tools/RandomAadharNumber'
+import AadharServices from '../../Services/Services'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const initialValues = {
     firstname:'',
@@ -16,6 +18,39 @@ const initialValues = {
 }
 
 const AadharForm = () => {
+
+    const Services = new AadharServices
+
+    const navigate = useNavigate()
+
+    const {id} = useParams()
+
+    const [btnName, setBtnName] = useState("Submit")
+    useEffect(()=>{
+        editdata();
+    },[0])
+
+    async function editdata(){
+        try {
+            Services.editData(id)
+            .then(res => {
+                const data = res.data.result
+                // console.log(data);
+                formik.setValues(data)
+                if(!id){
+                    setBtnName("Submit")
+                }else{
+                    setBtnName("Update")
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
     const formik = useFormik({
         initialValues,
         validationSchema: Yup.object({
@@ -27,15 +62,49 @@ const AadharForm = () => {
             phone: Yup.string().min(6,"Please check your contact number").max(10,"your contact number is above 10").required("Required"),
             dob: Yup.string().required("Required"),
         }),
-        onSubmit: values => {
+        onSubmit: async (values) => {
             values.aadharno = AadharNumber();
-            console.log(JSON.stringify(values,null,2));
+            if(btnName !== "Update"){
+                await Services.postData(JSON.stringify(values, null, 2))
+                    .then(res => {
+                        if (res.data.status === 200) {
+                            navigate("/AadharTable")
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });    
+            }else{
+                delete values._id
+                await Services.updateData(id,JSON.stringify(values, null, 2))
+                    .then(res => {
+                        if (res.data.status === 200) {
+                            navigate("/AadharTable")
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            
+            // console.log(JSON.stringify(values,null,2));
         }
     })
 
+    const handleCancel = () => {
+        if(!id){
+            formik.setValues(initialValues)
+        }else{
+            formik.setValues(initialValues)
+            navigate("/AadharTable")
+        }
+    }
+
 
   return (
-    <div className='form'>
+    <div className="box">
+        <Link to={'/AadharTable'} className='backtoTable'>Back to Table</Link>
+        <div className='form'>
         <h2><span>Aadhar</span> Form</h2>
         <form onSubmit={formik.handleSubmit}>
             <div className="inputs">
@@ -148,10 +217,11 @@ const AadharForm = () => {
                 }
             </div>
             <div className="button_section">
-                <button type='submit'>Submit</button>
-                <button type='reset'>Cancel</button>
+                <button type='submit'>{btnName}</button>
+                <button type='reset' onClick={handleCancel}>Cancel</button>
             </div>
         </form>
+    </div>
     </div>
   )
 }
